@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">App</string>
+    <string name="nome">nome</string>
+    <string name="sobrenome">sobrenome</string>
+    <string name="salvar">Salvar</string>
+    <string name="limpar">Limpar</string>
+    <string name="aplicativo_de_lista_de_cursos">Aplicativo de lista de cursos</string>
+    <string name="finalizar">Finalizar</string>
+    <string name="telefone">telefone</string>
+    <string name="curso">curso</string>
+</resources>
