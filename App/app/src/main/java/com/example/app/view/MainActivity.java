@@ -67,9 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 pessoa.setCurso(String.valueOf(etCurso.getText()));
                 pessoa.setTelefone(String.valueOf(etTelefone.getText()));
 
-                pessoa.addPessoa(pessoa);
-                pessoa.printList();
-
                 etNome.setText("");
                 etCurso.setText("");
                 etSobrenome.setText("");
