@@ -59,13 +59,20 @@ public class MainActivity extends AppCompatActivity {
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pessoa = new Pessoa();
+                pessoa = new Pessoa(
+                        String.valueOf(etNome.getText()),
+                        String.valueOf(etSobrenome.getText()),
+                        String.valueOf(etCurso.getText()),
+                        String.valueOf(etTelefone.getText())
+                );
+
                 curso = new Curso(String.valueOf(etCurso.getText()));
 
-                pessoa.setNome(String.valueOf(etNome.getText()));
-                pessoa.setSobrenome(String.valueOf(etSobrenome.getText()));
-                pessoa.setCurso(String.valueOf(etCurso.getText()));
-                pessoa.setTelefone(String.valueOf(etTelefone.getText()));
+                pessoaController = new PessoaController();
+                cursoController = new CursoController();
+
+                pessoaController.salvar(pessoa);
+                cursoController.salvar(curso);
 
                 etNome.setText("");
                 etCurso.setText("");
@@ -73,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 etTelefone.setText("");
             }
         });
+
+
     }
 
 }

@@ -15,4 +15,10 @@ public class Curso {
     public void setCursoDesejado(String cursoDesejado) {
         this.cursoDesejado = cursoDesejado;
     }
+
+    @Override
+    public String toString() {
+        return "cursoDesejado='" + cursoDesejado + '\'' +
+                '}';
+    }
 }
