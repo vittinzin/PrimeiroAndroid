@@ -1,5 +1,6 @@
 package com.example.app.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,9 @@ import com.example.app.model.Pessoa;
 
 public class MainActivity extends AppCompatActivity {
 
+    SharedPreferences sharedPreferences;
+    private static final String prefs = "dados_usuario";
+
     Pessoa pessoa;
     Curso curso;
     private Button btnSalvar, btnLimpar, btnFinalizar;
@@ -29,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        sharedPreferences = getSharedPreferences(prefs,0);
+        SharedPreferences.Editor listaVip = sharedPreferences.edit();
+
         btnSalvar = findViewById(R.id.btn_salvar);
         btnLimpar = findViewById(R.id.btn_limpar);
         btnFinalizar = findViewById(R.id.btn_finalizar);
@@ -37,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         etSobrenome = findViewById(R.id.etSobrenome);
         etCurso =findViewById(R.id.etCurso);
         etTelefone = findViewById(R.id.etTelefone);
-
 
         btnLimpar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
                 pessoaController = new PessoaController();
                 cursoController = new CursoController();
+
+                listaVip.putString("NOME: ",pessoa.getNome());
+                listaVip.putString("SOBRENOME: ", pessoa.getSobrenome());
+                listaVip.putString("CURSO: ", pessoa.getCurso());
+                listaVip.putString("TELEFONE: ", pessoa.getTelefone());
+                listaVip.apply();
 
                 pessoaController.salvar(pessoa);
                 cursoController.salvar(curso);

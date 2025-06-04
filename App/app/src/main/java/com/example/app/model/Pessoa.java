@@ -36,11 +36,11 @@ public class Pessoa {
         this.sobrenome = sobrenome;
     }
 
-    public String getCurso() {
+    public String  getCurso() {
         return curso;
     }
 
-    public void setCurso(String curso) {
+    public void setCurso(String  curso) {
         this.curso = curso;
     }
 
