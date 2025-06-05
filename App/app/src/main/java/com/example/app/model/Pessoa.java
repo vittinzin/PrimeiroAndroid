@@ -7,16 +7,14 @@ public class Pessoa {
 
     private String nome;
     private String sobrenome;
-    private String curso;
     private String telefone;
 
     public Pessoa (){
     }
 
-    public Pessoa(String nome, String sobrenome, String curso, String telefone) {
+    public Pessoa(String nome, String sobrenome, String telefone) {
         this.nome = nome;
         this.sobrenome = sobrenome;
-        this.curso = curso;
         this.telefone = telefone;
     }
 
@@ -36,14 +34,6 @@ public class Pessoa {
         this.sobrenome = sobrenome;
     }
 
-    public String  getCurso() {
-        return curso;
-    }
-
-    public void setCurso(String  curso) {
-        this.curso = curso;
-    }
-
     public String getTelefone() {
         return telefone;
     }
@@ -57,7 +47,6 @@ public class Pessoa {
     public String toString() {
         return "nome='" + nome + '\'' +
                 ", sobrenome='" + sobrenome + '\'' +
-                ", curso='" + curso + '\'' +
                 ", telefone='" + telefone + '\'' +
                 '}';
     }

@@ -1,14 +1,12 @@
 package com.example.app.view;
 
-import android.content.SharedPreferences;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.app.R;
 import com.example.app.controller.CursoController;
 import com.example.app.controller.PessoaController;
@@ -17,15 +15,11 @@ import com.example.app.model.Pessoa;
 
 public class MainActivity extends AppCompatActivity {
 
-    SharedPreferences sharedPreferences;
-    private static final String prefs = "dados_usuario";
-
-    Pessoa pessoa;
-    Curso curso;
-    private Button btnSalvar, btnLimpar, btnFinalizar;
-    private EditText etNome, etSobrenome, etCurso, etTelefone;
-    private PessoaController pessoaController;
-    private CursoController cursoController;
+    Context context = this;
+    Button btnSalvar, btnLimpar, btnFinalizar;
+    EditText etNome, etSobrenome, etCurso, etTelefone;
+    PessoaController pessoaController;
+    CursoController cursoController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences = getSharedPreferences(prefs,0);
-        SharedPreferences.Editor listaVip = sharedPreferences.edit();
+        pessoaController = new PessoaController(this);
+        cursoController = new CursoController(this);
 
         btnSalvar = findViewById(R.id.btn_salvar);
         btnLimpar = findViewById(R.id.btn_limpar);
@@ -42,58 +36,52 @@ public class MainActivity extends AppCompatActivity {
 
         etNome = findViewById(R.id.etNome);
         etSobrenome = findViewById(R.id.etSobrenome);
-        etCurso =findViewById(R.id.etCurso);
+        etCurso = findViewById(R.id.etCurso);
         etTelefone = findViewById(R.id.etTelefone);
 
-        btnLimpar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnSalvar.setOnClickListener(v -> {
+            Pessoa pessoa = new Pessoa(
+                    etNome.getText().toString(),
+                    etSobrenome.getText().toString(),
+                    etTelefone.getText().toString()
+            );
+
+            Curso curso = new Curso(etCurso.getText().toString());
+
+            pessoaController.salvarPessoa(pessoa);
+            cursoController.salvarCurso(curso);
+
+            Toast.makeText(this,pessoa.toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,curso.toString(),Toast.LENGTH_SHORT).show();
+
+        });
+
+        btnLimpar.setOnClickListener( v -> {
                 etNome.setText("");
                 etCurso.setText("");
                 etSobrenome.setText("");
                 etTelefone.setText("");
-            }
+                pessoaController.deletarPessoa();
+
+            Toast.makeText(this, "Pessoa deletada!",Toast.LENGTH_SHORT).show();
         });
 
-        btnFinalizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnFinalizar.setOnClickListener(v -> {
+            Toast.makeText(this, "App finalizado!",Toast.LENGTH_SHORT).show();
                 finish();
-            }
         });
+        carregarPessoaSalva();
 
-        btnSalvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pessoa = new Pessoa(
-                        String.valueOf(etNome.getText()),
-                        String.valueOf(etSobrenome.getText()),
-                        String.valueOf(etCurso.getText()),
-                        String.valueOf(etTelefone.getText())
-                );
+    }
 
-                curso = new Curso(String.valueOf(etCurso.getText()));
+    public void carregarPessoaSalva () {
+        Pessoa pessoa = pessoaController.carregarPessoa();
+        Curso curso = cursoController.carregarCurso();
 
-                pessoaController = new PessoaController();
-                cursoController = new CursoController();
-
-                listaVip.putString("NOME: ",pessoa.getNome());
-                listaVip.putString("SOBRENOME: ", pessoa.getSobrenome());
-                listaVip.putString("CURSO: ", pessoa.getCurso());
-                listaVip.putString("TELEFONE: ", pessoa.getTelefone());
-                listaVip.apply();
-
-                pessoaController.salvar(pessoa);
-                cursoController.salvar(curso);
-
-                etNome.setText("");
-                etCurso.setText("");
-                etSobrenome.setText("");
-                etTelefone.setText("");
-            }
-        });
-
-
+        etNome.setText(pessoa.getNome());
+        etSobrenome.setText(pessoa.getSobrenome());
+        etCurso.setText(curso.getCursoDesejado());
+        etTelefone.setText(pessoa.getTelefone());
     }
 
 }

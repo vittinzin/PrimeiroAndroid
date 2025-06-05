@@ -1,25 +1,39 @@
 package com.example.app.controller;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
-
-import com.example.app.R;
 import com.example.app.model.Pessoa;
 
 public class PessoaController {
 
-    @NonNull
-    @Override
-    public String toString() {
+    private static final String prefs = "dados_usuario";
+    SharedPreferences sharedPreferences;
 
-        Log.d("MVC controller", "PessoaController iniciada");
-        return super.toString();
+    public PessoaController (Context context){
+        sharedPreferences = context.getSharedPreferences(prefs, Context.MODE_PRIVATE);
     }
 
-    public void  salvar(Pessoa pessoa){
-        Log.d("MVC controller","Pessoa salva: " + pessoa.toString());
+    public void salvarPessoa (Pessoa pessoa){
+        SharedPreferences.Editor listaVip = sharedPreferences.edit();
+        listaVip.putString("NOME: ",pessoa.getNome());
+        listaVip.putString("SOBRENOME: ", pessoa.getSobrenome());
+        listaVip.putString("TELEFONE: ", pessoa.getTelefone());
+        listaVip.apply();
+    }
+
+    public Pessoa carregarPessoa (){
+        String nome = sharedPreferences.getString("NOME: ","");
+        String sobrenome = sharedPreferences.getString("SOBRENOME: ", "");
+        String telefone = sharedPreferences.getString("TELEFONE: ", "");
+
+        return new Pessoa(nome, sobrenome,telefone);
+    }
+
+    public void deletarPessoa (){
+        sharedPreferences.edit().clear().apply();
     }
 }
