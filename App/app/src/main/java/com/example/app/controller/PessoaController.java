@@ -21,6 +21,7 @@ public class PessoaController {
         SharedPreferences.Editor listaVip = sharedPreferences.edit();
         listaVip.putString("NOME: ",pessoa.getNome());
         listaVip.putString("SOBRENOME: ", pessoa.getSobrenome());
+        listaVip.putString("CURSO: ", pessoa.getCurso());
         listaVip.putString("TELEFONE: ", pessoa.getTelefone());
         listaVip.apply();
     }
@@ -28,9 +29,10 @@ public class PessoaController {
     public Pessoa carregarPessoa (){
         String nome = sharedPreferences.getString("NOME: ","");
         String sobrenome = sharedPreferences.getString("SOBRENOME: ", "");
+        String curso = sharedPreferences.getString("CURSO: ","");
         String telefone = sharedPreferences.getString("TELEFONE: ", "");
 
-        return new Pessoa(nome, sobrenome,telefone);
+        return new Pessoa(nome, sobrenome, curso, telefone);
     }
 
     public void deletarPessoa (){

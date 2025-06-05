@@ -8,9 +8,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app.R;
-import com.example.app.controller.CursoController;
 import com.example.app.controller.PessoaController;
-import com.example.app.model.Curso;
 import com.example.app.model.Pessoa;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     Button btnSalvar, btnLimpar, btnFinalizar;
     EditText etNome, etSobrenome, etCurso, etTelefone;
     PessoaController pessoaController;
-    CursoController cursoController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         pessoaController = new PessoaController(this);
-        cursoController = new CursoController(this);
 
         btnSalvar = findViewById(R.id.btn_salvar);
         btnLimpar = findViewById(R.id.btn_limpar);
@@ -43,16 +39,13 @@ public class MainActivity extends AppCompatActivity {
             Pessoa pessoa = new Pessoa(
                     etNome.getText().toString(),
                     etSobrenome.getText().toString(),
+                    etCurso.getText().toString(),
                     etTelefone.getText().toString()
             );
 
-            Curso curso = new Curso(etCurso.getText().toString());
-
             pessoaController.salvarPessoa(pessoa);
-            cursoController.salvarCurso(curso);
 
             Toast.makeText(this,pessoa.toString(),Toast.LENGTH_SHORT).show();
-            Toast.makeText(this,curso.toString(),Toast.LENGTH_SHORT).show();
 
         });
 
@@ -76,11 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void carregarPessoaSalva () {
         Pessoa pessoa = pessoaController.carregarPessoa();
-        Curso curso = cursoController.carregarCurso();
 
         etNome.setText(pessoa.getNome());
         etSobrenome.setText(pessoa.getSobrenome());
-        etCurso.setText(curso.getCursoDesejado());
+        etCurso.setText(pessoa.getSobrenome());
         etTelefone.setText(pessoa.getTelefone());
     }
 
