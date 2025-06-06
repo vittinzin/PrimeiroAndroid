@@ -2,16 +2,13 @@ package com.example.app.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
-import android.view.View;
-
-import androidx.annotation.NonNull;
 import com.example.app.model.Pessoa;
 
 public class PessoaController {
 
     private static final String prefs = "dados_usuario";
     SharedPreferences sharedPreferences;
+
 
     public PessoaController (Context context){
         sharedPreferences = context.getSharedPreferences(prefs, Context.MODE_PRIVATE);
