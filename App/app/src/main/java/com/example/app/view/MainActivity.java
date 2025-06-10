@@ -10,7 +10,9 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app.DB.DB;
 import com.example.app.R;
+import com.example.app.controller.DBController;
 import com.example.app.controller.PessoaController;
 import com.example.app.controller.CursoController;
 import com.example.app.model.Pessoa;
@@ -49,12 +51,16 @@ public class MainActivity extends AppCompatActivity {
         btnLimpar = findViewById(R.id.btn_limpar);
         btnFinalizar = findViewById(R.id.btn_finalizar);
 
+
         etNome = findViewById(R.id.etNome);
         etSobrenome = findViewById(R.id.etSobrenome);
         etCurso = findViewById(R.id.etCurso);
         etTelefone = findViewById(R.id.etTelefone);
 
         btnSalvar.setOnClickListener(v -> {
+            DBController db = new DBController(this);
+            String dbResultado;
+
             Pessoa pessoa = new Pessoa(
                     etNome.getText().toString(),
                     etSobrenome.getText().toString(),
@@ -62,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     etTelefone.getText().toString()
             );
 
-            int resultado = pessoaController.confirmarPessoa(pessoa);
-
-            if (resultado == -1) {
+            if (pessoaController.confirmarPessoa(pessoa) == -1) {
                 pessoaController.salvarPessoa(pessoa);
                 pessoa.setCurso(etCurso.getSelectedItem().toString());
                 posicao = etCurso.getSelectedItemPosition();
@@ -72,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 cursoController = new CursoController(this);
                 cursoController.salvarPosicao(posicao);
 
-                Toast.makeText(this, pessoa.toString(), Toast.LENGTH_SHORT).show();
+                dbResultado = db.inserirDados(pessoa.getNome(),pessoa.getSobrenome(), pessoa.getTelefone(), pessoa.getCurso());
+                Toast.makeText(this, dbResultado, Toast.LENGTH_SHORT).show();
+
             } else {
                 Toast.makeText(this, "Informações incorretas!", Toast.LENGTH_SHORT).show();
                 cursoController.deletarSpinner();
@@ -107,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         etSobrenome.setText(pessoa.getSobrenome());
         etCurso.setSelection(cursoController.carregarCurso());
         etTelefone.setText(pessoa.getTelefone());
-
     }
 
 }
