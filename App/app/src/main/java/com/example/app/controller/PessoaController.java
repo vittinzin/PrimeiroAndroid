@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import com.example.app.model.Pessoa;
 
+import java.util.Objects;
+
 public class PessoaController {
 
     private static final String prefs = "dados_usuario";
@@ -43,7 +45,7 @@ public class PessoaController {
         };
 
         for (int i = 0; i < pessoaInfo.length; i++) {
-            if (pessoaInfo[i] == null || pessoaInfo[i].trim().isEmpty()) {
+            if (pessoaInfo[i] == null || pessoaInfo[i].trim().isEmpty() || Objects.equals(pessoa.getCurso(), "Selecione um curso")) {
                 return i;
             }
         }
