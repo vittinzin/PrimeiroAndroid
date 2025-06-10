@@ -9,7 +9,6 @@ public class PessoaController {
     private static final String prefs = "dados_usuario";
     SharedPreferences sharedPreferences;
 
-
     public PessoaController (Context context){
         sharedPreferences = context.getSharedPreferences(prefs, Context.MODE_PRIVATE);
     }
@@ -34,5 +33,20 @@ public class PessoaController {
 
     public void deletarPessoa (){
         sharedPreferences.edit().clear().apply();
+    }
+
+    public int confirmarPessoa(Pessoa pessoa) {
+        String[] pessoaInfo = new String[] {
+                pessoa.getNome(),
+                pessoa.getSobrenome(),
+                pessoa.getTelefone()
+        };
+
+        for (int i = 0; i < pessoaInfo.length; i++) {
+            if (pessoaInfo[i] == null || pessoaInfo[i].trim().isEmpty()) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

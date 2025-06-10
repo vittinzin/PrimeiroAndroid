@@ -17,7 +17,7 @@ public class CursoController {
         listaVip.apply();
     }
 
-    public int carregarSpiner() {
+    public int carregarCurso() {
         int posicao = sharedPreferences.getInt("posicao", 0);
         return posicao;
     }
